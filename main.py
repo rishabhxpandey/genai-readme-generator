@@ -10,8 +10,8 @@ from utils.repo_util import get_repository_details
 load_dotenv()
 setup_logging()
 
-st.set_page_config(page_title="Azure DevOps README Generator", layout="wide")
-st.title("🚀 Azure DevOps README Generator")
+st.set_page_config(page_title="ADO README Generator", layout="wide")
+st.title("🚀 ADO README Generator")
 st.write("Enter the HTTPS or SSH URL of your Azure DevOps repository below.")
 
 repo_url = st.text_input("Repository URL:", placeholder="e.g., https://dev.azure.com/your_org/YourProject/_git/YourRepo")
@@ -34,17 +34,13 @@ if st.button("Generate README"):
                     st.subheader("Fetched Repository Details:")
                     st.json(repo_details) # Display fetched details as JSON for now
 
-                    st.subheader("Generated README (Placeholder)")
-                    with st.spinner("Generating README content (placeholder)..."):
-                        # TODO: Replace with actual call to generate_readme(repo_details)
-                        # Simulating generation
-                        import time
-                        time.sleep(2) 
-                        placeholder_readme = f"# {repo_details.get('name', 'Repository Name')}\n\nThis is a placeholder README for the repository.\n\n**Project:** {repo_details.get('project_name', 'N/A')}\n**Description:** {repo_details.get('description', 'N/A')}\n**Default Branch:** {repo_details.get('default_branch', 'N/A')}"
-                        
-                        st.text_area("README Content:", placeholder_readme, height=400)
-                        st.success("Placeholder README generated.")
-                        logging.info("Placeholder README generated.")
+                    st.subheader("Generated README:")
+                    
+                    with st.spinner("Generating README content..."):
+                        generated_readme = generate_readme(repo_details)
+                        st.text_area("README Content:", generated_readme, height=400)
+                        st.success("README generated successfully.")
+                        logging.info("README generated successfully.")
                 
                 else:
                     logging.error(f"Failed to fetch repository details for {repo_url}.")

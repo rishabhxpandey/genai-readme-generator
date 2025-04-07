@@ -3,14 +3,10 @@ import requests
 from urllib.parse import urlparse
 import os
 
-# Assuming azure_auth.py is in the auth directory, one level up and then down
-# Adjust the import path if your project structure is different or use package-relative imports
 try:
     from auth.azure_auth import get_auth_headers
 except ImportError:
-    # Handle cases where this might be run standalone or structure changes
     logging.error("Could not import get_auth_headers from auth.azure_auth. Check import path.")
-    # Define a dummy function or re-raise to prevent downstream errors
     def get_auth_headers():
         raise ImportError("auth.azure_auth not found")
 
@@ -162,29 +158,3 @@ def get_repository_details(repo_url: str) -> dict | None:
         logger.error(f"Failed to fetch repository details for {repo_name}.")
         return None
 
-# --- Example Usage ---
-# if __name__ == '__main__':
-#     # Make sure .env is loaded if running directly or AZURE_DEVOPS_PAT is set
-#     from dotenv import load_dotenv
-#     load_dotenv() 
-#     import sys
-#     # Add project root to path if necessary to find auth module
-#     # sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-    
-#     # Configure logging for testing
-#     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-#     test_repo_url_https = "https://your_org@dev.azure.com/your_org/YourProject/_git/YourRepoName"
-#     # test_repo_url_ssh = "git@ssh.dev.azure.com:v3/your_org/YourProject/YourRepoName"
-    
-#     print(f"--- Testing with URL: {test_repo_url_https} ---")
-#     details = get_repository_details(test_repo_url_https)
-    
-#     if details:
-#         print("\nRepository Details:")
-#         for key, value in details.items():
-#             print(f"  {key}: {value}")
-#     else:
-#         print("\nFailed to get repository details.")
-
-#     # Add more test cases if needed (invalid URL, SSH URL, etc.)
