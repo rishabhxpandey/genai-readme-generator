@@ -3,9 +3,7 @@ import streamlit as st
 from dotenv import load_dotenv
 from utils.logger_config import setup_logging
 from utils.repo_util import get_repository_details
-# Import the generator function when it's created
-# from generators.readme_generator import generate_readme
-
+from generators.readme_generator import generate_readme
 
 load_dotenv()
 setup_logging()
